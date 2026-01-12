@@ -5,7 +5,7 @@ let socket = null;
 export const initSocket = (userId) => {
   if (socket) return socket;
   
-  socket = io('http://localhost:4000', {
+  socket = io('https://gigflow-backend-31cf.onrender.com', {
     withCredentials: true,
     reconnection: true,
     reconnectionDelay: 1000,
