@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const API = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://gigflow-backend-31cf.onrender.com/api',
   withCredentials: true,  // This sends cookies with every request
 })
 
