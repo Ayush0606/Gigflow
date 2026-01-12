@@ -10,7 +10,8 @@ export const initSocket = (userId) => {
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionDelayMax: 5000,
-    reconnectionAttempts: 5
+    reconnectionAttempts: 5,
+    transports: ['websocket', 'polling']
   });
 
   socket.on('connect', () => {
@@ -22,12 +23,16 @@ export const initSocket = (userId) => {
     }
   });
 
-  socket.on('disconnect', () => {
-    console.log('❌ Disconnected from server');
+  socket.on('disconnect', (reason) => {
+    console.log('❌ Disconnected from server:', reason);
   });
 
   socket.on('error', (error) => {
     console.error('⚠️ Socket error:', error);
+  });
+
+  socket.on('connect_error', (error) => {
+    console.error('⚠️ Connection error:', error);
   });
 
   // Listen for hired notifications
