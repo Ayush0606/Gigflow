@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { getSocket } from '../services/socket'
+import { onHired } from '../services/socket'
 import { addNotification } from '../redux/notificationsSlice'
 
 export default function NotificationBanner() {
@@ -8,12 +8,6 @@ export default function NotificationBanner() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const socket = getSocket()
-    if (!socket) {
-      console.log('❌ Socket not available in NotificationBanner')
-      return
-    }
-
     const handleHired = (data) => {
       console.log('🎉 NotificationBanner received:', data)
       
@@ -33,11 +27,11 @@ export default function NotificationBanner() {
       return () => clearTimeout(timer)
     }
 
-    console.log('🔔 Listening for hired event...')
-    socket.on('hired', handleHired)
+    console.log('🔔 Setting up hired notification listener...')
+    onHired(handleHired)
 
     return () => {
-      socket.off('hired', handleHired)
+      onHired(null)
     }
   }, [dispatch])
 

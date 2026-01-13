@@ -1,6 +1,7 @@
 import io from 'socket.io-client'
 
 let socket = null;
+let hiredCallback = null;
 
 export const initSocket = (userId) => {
   if (socket) return socket;
@@ -35,15 +36,22 @@ export const initSocket = (userId) => {
     console.error('⚠️ Connection error:', error);
   });
 
-  // Listen for hired notifications
+  // Listen for hired notifications and call registered callback
   socket.on('hired', (data) => {
     console.log('🎉 Received hire notification:', data);
+    if (hiredCallback) {
+      hiredCallback(data);
+    }
   });
 
   return socket;
 };
 
 export const getSocket = () => socket;
+
+export const onHired = (callback) => {
+  hiredCallback = callback;
+};
 
 export const closeSocket = () => {
   if (socket) {
