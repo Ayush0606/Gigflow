@@ -94,16 +94,22 @@ export default function GigDetailPage() {
     }
   }
 
-  if (!user) return navigate('/login')
-  if (loading) return <p className="text-center py-8 text-gray-500">Loading gig details...</p>
+  React.useEffect(() => {
+    if (!user) {
+      navigate('/login')
+    }
+  }, [user, navigate])
+
+  if (!user) return null
+  if (loading) return <p className="text-center py-8 text-gray-500 text-sm sm:text-base">Loading gig details...</p>
   if (!gig) return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <button onClick={() => navigate('/gigs')} className="text-blue-600 hover:underline">← Back to Gigs</button>
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
+          <button onClick={() => navigate('/gigs')} className="text-blue-600 hover:underline text-sm sm:text-base">← Back to Gigs</button>
         </div>
       </nav>
-      <p className="text-center py-8 text-red-600">{error || 'Gig not found'}</p>
+      <p className="text-center py-8 text-red-600 text-sm sm:text-base px-3">{error || 'Gig not found'}</p>
     </div>
   )
 
@@ -112,34 +118,34 @@ export default function GigDetailPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-8">
-            <h1 className="text-3xl font-bold text-blue-600">GigFlow</h1>
-            {user && <p className="text-lg text-gray-700">Welcome, <span className="font-semibold text-gray-900">{user.name}</span></p>}
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex justify-between items-center">
+          <div className="flex items-center gap-4 sm:gap-8 min-w-0 flex-1">
+            <h1 className="text-xl sm:text-3xl font-bold text-blue-600 truncate">GigFlow</h1>
+            {user && <p className="hidden sm:block text-lg text-gray-700">Welcome, <span className="font-semibold text-gray-900">{user.name}</span></p>}
           </div>
           <button
             onClick={() => navigate('/gigs')}
-            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
+            className="bg-gray-600 text-white px-3 sm:px-4 py-2 rounded hover:bg-gray-700 transition text-sm sm:text-base flex-shrink-0"
           >
             ← Back
           </button>
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {error && <div className="bg-red-100 text-red-700 p-4 rounded mb-4">{error}</div>}
-        {successMessage && <div className="bg-green-100 text-green-700 p-4 rounded mb-4">{successMessage}</div>}
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+        {error && <div className="bg-red-100 text-red-700 p-3 sm:p-4 rounded mb-4 text-sm">{error}</div>}
+        {successMessage && <div className="bg-green-100 text-green-700 p-3 sm:p-4 rounded mb-4 text-sm">{successMessage}</div>}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* GIG DETAILS - Left Side */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow p-8">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">{gig.title}</h1>
-              <p className="text-gray-600 mb-6 text-lg">{gig.description}</p>
+            <div className="bg-white rounded-lg shadow p-4 sm:p-8">
+              <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">{gig.title}</h1>
+              <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-lg">{gig.description}</p>
               
-              <div className="flex justify-between items-center mb-6 pb-6 border-b">
-                <span className="text-3xl font-bold text-green-600">${gig.budget}</span>
-                <span className={`px-4 py-2 rounded font-semibold text-sm ${
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 pb-4 sm:pb-6 border-b gap-3 sm:gap-0">
+                <span className="text-2xl sm:text-3xl font-bold text-green-600">${gig.budget}</span>
+                <span className={`px-3 sm:px-4 py-1 sm:py-2 rounded font-semibold text-xs sm:text-sm ${
                   gig.status === 'open' 
                     ? 'bg-green-100 text-green-700' 
                     : 'bg-gray-100 text-gray-700'
@@ -148,7 +154,7 @@ export default function GigDetailPage() {
                 </span>
               </div>
               
-              <p className="text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-gray-500">
                 📌 Posted by <span className="font-semibold text-gray-700">{gig.ownerId.name}</span>
               </p>
             </div>
@@ -156,12 +162,12 @@ export default function GigDetailPage() {
 
           {/* BIDS SECTION - Right Side */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow p-6 sticky top-4">
+            <div className="bg-white rounded-lg shadow p-4 sm:p-6 lg:sticky lg:top-4">
               {isOwner ? (
                 <div>
-                  <h3 className="text-xl font-bold mb-4">📋 Bids ({bids.length})</h3>
+                  <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">📋 Bids ({bids.length})</h3>
                   {bids.length === 0 ? (
-                    <p className="text-gray-500 text-center py-4">No bids yet. Share this gig to get bids!</p>
+                    <p className="text-gray-500 text-center py-4 text-sm">No bids yet. Share this gig to get bids!</p>
                   ) : (
                     <BidList 
                       bids={bids} 
@@ -173,7 +179,7 @@ export default function GigDetailPage() {
                 </div>
               ) : gig.status === 'open' ? (
                 <div>
-                  <h3 className="text-xl font-bold mb-4">💼 Submit Your Bid</h3>
+                  <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">💼 Submit Your Bid</h3>
                   <BidForm 
                     gigId={gigId} 
                     onSubmit={handleSubmitBid} 
@@ -182,7 +188,7 @@ export default function GigDetailPage() {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-xs sm:text-sm">
                     ✅ This gig has been assigned to a freelancer
                   </p>
                 </div>

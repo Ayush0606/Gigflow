@@ -46,32 +46,32 @@ export default function NotificationBell() {
 
       {/* Dropdown Panel */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl z-50 border border-gray-200">
-          <div className="p-4 border-b border-gray-200">
-            <h3 className="font-bold text-gray-900">Notifications</h3>
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-lg shadow-xl z-50 border border-gray-200 max-h-[70vh] flex flex-col">
+          <div className="p-3 sm:p-4 border-b border-gray-200 flex-shrink-0">
+            <h3 className="font-bold text-gray-900 text-sm sm:text-base">Notifications</h3>
           </div>
 
           {items.length === 0 ? (
-            <div className="p-4 text-center text-gray-500">
+            <div className="p-4 text-center text-gray-500 text-sm">
               No notifications yet
             </div>
           ) : (
-            <div className="max-h-96 overflow-y-auto">
+            <div className="overflow-y-auto flex-1">
               {items.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`p-4 border-b border-gray-100 hover:bg-gray-50 transition cursor-pointer ${
+                  className={`p-3 sm:p-4 border-b border-gray-100 hover:bg-gray-50 transition cursor-pointer ${
                     !notification.read ? 'bg-blue-50' : ''
                   }`}
                   onClick={() => handleMarkAsRead(notification.id)}
                 >
                   <div className="flex justify-between items-start gap-2">
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-gray-900 text-xs sm:text-sm truncate">
                         {notification.message}
                       </h4>
                       {notification.gigBudget && (
-                        <p className="text-sm text-gray-600 mt-1">
+                        <p className="text-xs sm:text-sm text-gray-600 mt-1">
                           Budget: <span className="font-semibold">${notification.gigBudget}</span>
                         </p>
                       )}
@@ -100,13 +100,13 @@ export default function NotificationBell() {
           )}
 
           {items.length > 0 && (
-            <div className="p-4 border-t border-gray-200 text-center">
+            <div className="p-3 sm:p-4 border-t border-gray-200 text-center flex-shrink-0">
               <button
                 onClick={() => {
                   dispatch(clearNotifications())
                   setIsOpen(false)
                 }}
-                className="text-sm text-blue-600 hover:text-blue-700 font-semibold"
+                className="text-xs sm:text-sm text-blue-600 hover:text-blue-700 font-semibold"
               >
                 Clear All
               </button>

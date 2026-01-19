@@ -38,17 +38,17 @@ export default function NotificationBanner() {
   return (
     <>
       {banner && (
-        <div className="fixed top-24 right-4 z-[9999] animate-bounce">
-          <div className="bg-gradient-to-r from-green-400 to-green-600 text-white p-6 rounded-lg shadow-2xl max-w-md border-2 border-green-300">
-            <div className="flex items-start gap-4">
-              <span className="text-4xl">🎉</span>
-              <div className="flex-1">
-                <h3 className="font-bold text-lg mb-1">{banner.message}</h3>
-                <p className="text-sm mb-2 text-green-50">
+        <div className="fixed top-20 sm:top-24 right-2 sm:right-4 z-[9999] animate-bounce p-2 sm:p-0">
+          <div className="bg-gradient-to-r from-green-400 to-green-600 text-white p-4 sm:p-6 rounded-lg shadow-2xl max-w-xs sm:max-w-md border-2 border-green-300">
+            <div className="flex items-start gap-3 sm:gap-4">
+              <span className="text-2xl sm:text-4xl flex-shrink-0">🎉</span>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-sm sm:text-lg mb-1 truncate">{banner.message}</h3>
+                <p className="text-xs sm:text-sm mb-2 text-green-50">
                   Budget: <span className="font-semibold text-green-100">${banner.gigBudget}</span>
                 </p>
                 <p className="text-xs text-green-100 opacity-75">
-                  ✅ Check your notifications for details
+                  ✅ Check notifications for details
                 </p>
               </div>
             </div>
