@@ -1,7 +1,23 @@
 import axios from 'axios'
 
+// Determine the correct API URL based on the environment
+const getApiUrl = () => {
+  // If VITE_API_URL is set (from environment variables), use it
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL
+  }
+  
+  // For deployed version, use production backend
+  if (window.location.hostname !== 'localhost') {
+    return 'https://gigflow-bd.onrender.com/api'
+  }
+  
+  // For local development, use localhost
+  return 'http://localhost:4000/api'
+}
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000/api',
+  baseURL: getApiUrl(),
   withCredentials: true,  // This sends cookies with every request
 })
 
