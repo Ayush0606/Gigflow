@@ -1,22 +1,15 @@
 import axios from 'axios'
 
-// Determine the correct API URL based on the environment
-const getApiBaseUrl = () => {
-  const hostname = window.location.hostname
-  const isDev = hostname === 'localhost' || hostname === '127.0.0.1'
-  
-  // Always use production API for deployed version
-  const apiUrl = isDev 
-    ? 'http://localhost:4000/api'
-    : 'https://gigflow-bd.onrender.com/api'
-  
-  console.log('🌍 Environment:', isDev ? 'DEVELOPMENT' : 'PRODUCTION')
-  console.log('🔗 API URL:', apiUrl)
-  
-  return apiUrl
+// Hardcode API URL based on environment - NO ENV VARS
+let API_URL = 'https://gigflow-bd.onrender.com/api'
+
+// Override ONLY if running locally
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+  API_URL = 'http://localhost:4000/api'
 }
 
-const API_URL = getApiBaseUrl()
+console.log('🌍 API Hostname:', window.location.hostname)
+console.log('🔗 API URL:', API_URL)
 
 const API = axios.create({
   baseURL: API_URL,

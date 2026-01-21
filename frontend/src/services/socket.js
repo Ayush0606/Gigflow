@@ -3,23 +3,20 @@ import io from 'socket.io-client'
 let socket = null;
 let hiredCallback = null;
 
-// Determine the correct socket server URL based on environment
-const getSocketUrl = () => {
-  const hostname = window.location.hostname
-  const isDev = hostname === 'localhost' || hostname === '127.0.0.1'
-  
-  const socketUrl = isDev 
-    ? 'http://localhost:4000'
-    : 'https://gigflow-bd.onrender.com'
-  
-  console.log('🔌 Socket URL:', socketUrl)
-  return socketUrl
+// Hardcode Socket URL based on environment - NO ENV VARS
+let SOCKET_URL = 'https://gigflow-bd.onrender.com'
+
+// Override ONLY if running locally
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+  SOCKET_URL = 'http://localhost:4000'
 }
+
+console.log('🔌 Socket URL:', SOCKET_URL)
 
 export const initSocket = (userId) => {
   if (socket) return socket;
   
-  socket = io(getSocketUrl(), {
+  socket = io(SOCKET_URL, {
     withCredentials: true,
     reconnection: true,
     reconnectionDelay: 1000,
