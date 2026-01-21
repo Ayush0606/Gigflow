@@ -1,19 +1,14 @@
 import axios from 'axios'
 
-// Hardcode API URL based on environment - NO ENV VARS
-let API_URL = 'https://gigflow-bd.onrender.com/api'
+// FORCE PRODUCTION - NO LOCALHOST
+const API_URL = 'https://gigflow-bd.onrender.com/api'
 
-// Override ONLY if running locally
-if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-  API_URL = 'http://localhost:4000/api'
-}
-
-console.log('🌍 API Hostname:', window.location.hostname)
-console.log('🔗 API URL:', API_URL)
+// Show in console that this is live
+console.error('🚀 PRODUCTION BUILD DEPLOYED - API:', API_URL)
 
 const API = axios.create({
   baseURL: API_URL,
-  withCredentials: true,  // This sends cookies with every request
+  withCredentials: true,
 })
 
 // Add a response interceptor to handle auth errors
