@@ -3,17 +3,17 @@ import axios from 'axios'
 // Determine the correct API URL based on the environment
 const getApiBaseUrl = () => {
   const hostname = window.location.hostname
-  console.log('🔍 Hostname:', hostname)
+  const isDev = hostname === 'localhost' || hostname === '127.0.0.1'
   
-  // Local development
-  if (hostname === 'localhost' || hostname === '127.0.0.1') {
-    console.log('✅ Using LOCAL API: http://localhost:4000/api')
-    return 'http://localhost:4000/api'
-  }
+  // Always use production API for deployed version
+  const apiUrl = isDev 
+    ? 'http://localhost:4000/api'
+    : 'https://gigflow-bd.onrender.com/api'
   
-  // Production (Netlify, any other domain)
-  console.log('✅ Using PRODUCTION API: https://gigflow-bd.onrender.com/api')
-  return 'https://gigflow-bd.onrender.com/api'
+  console.log('🌍 Environment:', isDev ? 'DEVELOPMENT' : 'PRODUCTION')
+  console.log('🔗 API URL:', apiUrl)
+  
+  return apiUrl
 }
 
 const API_URL = getApiBaseUrl()

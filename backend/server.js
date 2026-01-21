@@ -12,11 +12,17 @@ const bidsRoutes = require('./routes/bids');
 
 const app = express();
 const server = http.createServer(app);
-const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+
+// Accept requests from both local and deployed frontend
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'https://gigflow-frontend.netlify.app'
+];
 
 const io = new Server(server, {
   cors: {
-    origin: frontendUrl,
+    origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
   }
@@ -25,7 +31,7 @@ const io = new Server(server, {
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ 
-  origin: frontendUrl, 
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
